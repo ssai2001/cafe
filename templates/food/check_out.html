@@ -1,0 +1,31 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/message-number-style.css' %}">
+{% endblock css %}
+
+{% block content %}
+    <div class="row my-5">
+        <div class="col-md-5 mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    {% if messages %}
+                        {% for message in messages %}
+                            <p class={{message.tags}} >{{message}}</p>
+                        {% endfor %}
+                    {% endif %}
+                    <form class="needs-validation" action="{% url 'place_order' %}" method="post" onsubmit="return validate();">
+                        {% csrf_token %}
+                        <div class="mb-1">
+                            <label for="otp">Please check your registered mail-id for the OTP<span class="text-danger">*</span></label>
+                            <input type="text" name="otp" id="otp" class="form-control" placeholder="OTP" required>
+                            <small><label for="otp_error" id="otp_error" class="text-danger"></label></small>
+                        </div>
+                        <input type="submit" value="Verify" class="btn btn-primary w-100 my-2">
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}

@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/contact.css' %}">
+{% endblock css %}
+{% block content %}
+
+    <div class="container my-4">
+        <div class="row g-3 mx-2 px-3 py-3 border rounded">
+            <div class="col-md-6 border-end">
+                <div class="row">
+                    <h1 class="h3">Address</h1>
+                </div>
+                <div class="row">
+                    <li>Silicon Institute of Technology</li>
+                    <li>Silicon Hills</li>
+                    <li>Near DLF Cybercity, Patia</li>
+                    <li>Bhubaneswar, Odisha</li>
+                </div>
+            </div>
+            <div class="col-md-6 border-start">
+                <div class="container map-responsive">
+                    <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d935.1964999700208!2d85.8047838291556!3d20.350457456545428!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a1908e05ef4f9b5%3A0x56956f6c47c14afa!2sCafeteria!5e0!3m2!1sen!2sin!4v1660794562287!5m2!1sen!2sin" style="border:0;" allowfullscreen></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="row">
+            <form class="needs-validation" action="{% url 'thankYou' %}" onSubmit="return validator()">
+                {% csrf_token %}
+                <div class="mx-auto px-5 col-lg-8 col-md-8 border rounded">
+                    <div class="row mb-2 text-center">
+                        <h1 class="display-6">Contact Us</h1>
+                    </div>
+                    <div class="row mb-2">
+                        <label for="name">Name:</label>
+                        <input type="text" name="name" id="name" class="form-control">
+                        <small><label for="name_error" id="name_error" class="text-danger"></label></small>
+                    </div>
+                    <div class="row mb-2">
+                        <label for="suggestion">Suggestions:</label>
+                        <textarea name="suggestion" id="suggestion" class="form-control" rows="10"></textarea>
+                        <small><label for="sugesstion_error" id="suggestion_error" class="text-danger"></label></small>
+                    </div>
+                    {% if user.is_authenticated %}
+                        <div class="row mb-2">
+                            <input type="submit" value="Submit"  class="btn btn-primary w-100">
+                        </div>
+                    {% else %}
+                        <div class="row mb-2">
+                            <a href="{% url 'signin' %}?next=/contactUs" class="btn btn-primary w-100">Sign-in to Continue</a>
+                        </div>
+                    {% endif %}
+                </div>
+            </form>
+        </div>
+    </div>
+
+{% endblock content %}
+
+{% block extra_js %}
+    <script src="{% static 'js/suggestions-validator.js' %}"></script>      
+{% endblock extra_js%}

@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/details-style.css' %}">
+{% endblock css %}
+
+{% block content %}
+    <div class="container">
+        <div class="row my-5">
+            <div class="col-md-6">
+                <img src="{{food.image.url}}" alt="{{food.name}}" class="img-fluid">
+            </div>
+            <div class="col-md-6">
+                <h3 class="h3">{{food.name}}</h3>
+                <h5 class="h5"><i class="bi bi-currency-rupee"></i>{{food.price}}</h5>
+                <p class="lead">{{food.description}}</p>
+                <p class="lead">{{food.secondary_decription}}</p>
+                <div class="div my-2">
+                    {% if food.is_available %}
+                        {% if user.is_authenticated %}
+                            <form action="{% url 'add_to_cart' %}" method="post">
+                                {% csrf_token %}
+                                <input type="hidden" name="food_id" value={{food.id}}>
+                                <div class="input-group col-2 mb-3">
+                                    <button class="btn btn-outline-secondary" type="button" onclick="decrement()">-</button>
+                                    <input type="number" class="quantity" id="quantity" name="quantity" value="1" readonly>
+                                    <button class="btn btn-outline-secondary" type="button" onclick="increment()">+</button>
+                                </div>
+                                <input type="submit" value="Add to cart" class="btn btn-primary w-100">
+                            </form>
+                        {% else %}
+                            <a href="{% url 'signin' %}" class="btn btn-primary w-100">Sign-In to buy</a>
+                        {% endif %}
+                    {% else %}
+                        <p class="lead text-danger">Currently Out of Stock</p>
+                        {% comment %} <a href="" class="btn btn-danger disabled w-100">Currently Out of Stock</a> {% endcomment %}
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+
+{% block extra_js %}
+    <script src="{% static 'js/cart.js' %}"></script>
+{% endblock extra_js %}

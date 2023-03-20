@@ -1,0 +1,30 @@
+1. Open cmd.
+2. Check if python is present/not
+3. Install Django--use command:pip install django
+4. To start project--use command:django-admin startproject (project_name)
+5. To run server--use command:python manage.py runserver
+
+__pycache__ file stores modules...
+To change settings just change in settings.py
+
+
+To create an app/module
+python manage.py startapp (app_name)
+
+Then add (app_name) to INSTALLED_APPS=[] of settings.py and put a comma
+
+Go to views.py of pages folder and define a response to the request made for url:'index/'
+
+Then create an app url for pages_folder,
+create new file as urls.py
+Then add
+//
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('index/', views.index, name='home'),
+]
+//
+
+

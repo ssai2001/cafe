@@ -1,0 +1,165 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block css %}
+    <link rel="stylesheet" href="{% static 'css/menu.css' %}">
+    <link rel="stylesheet" href="{% static 'css/message-number-style.css' %}">
+{% endblock css %}
+
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="row">
+                <h1 class="h1" id="North Indian">North-Indian</h1>
+            </div>
+            {% for f in food %}
+                {% if f.category|stringformat:"s" ==  "North Indian" %}
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card my-2">
+                            <img src=" {{f.image.url}} " alt="{{f.name}}" class="card-img-top responsive">
+                            <div class="card-body">
+                                <a href="{% url 'details' f.id %}" class="butn btn"><h5>{{f.name}}</h5></a>
+                                <p class="card-text"><i class="bi bi-currency-rupee"></i>{{f.price}}</p>
+                                {% if f.is_available and user.is_authenticated %}
+                                    <hr>
+                                    <div class="row">
+                                        <form action="{% url 'add_to_cart' %}" method="post">
+                                            {% csrf_token %}
+                                            <input type="hidden" name="food_id" value={{f.id}}>
+                                            <div class="row">
+                                                <div class="col-md-6 g-1">
+                                                    <div class="input-group">
+                                                        <div class="dec btn btn-outline-secondary" type="button">-</div>
+                                                        <input type="number" name="quantity" class="form-control text-center" value="1" readonly>
+                                                        <div class="inc btn btn-outline-secondary" type="button">+</div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-md-6 g-1">
+                                                    <input type="submit" value="Add to cart" class="w-100 btn btn-primary">
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
+                                {% endif %}
+                                {% if not f.is_available and user.is_authenticated %}
+                                    <hr>
+                                    <p class="m-0 text-center text-danger" style="font-size:20px">Out of Stock</p>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+            <div class="row">
+                <h1 class="h1" id="chinese">Chinese</h1>
+            </div>
+            {% for f in food %}
+                {% if f.category|stringformat:"s" ==  "Chinese" %}
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card my-2">
+                            <img src=" {{f.image.url}} " alt="{{f.name}}" class="card-img-top responsive">
+                            <div class="card-body">
+                                <a href="{% url 'details' f.id %}" class="btn butn"><h5>{{f.name}}</h5></a>
+                                <p class="card-text"><i class="bi bi-currency-rupee"></i>{{f.price}}</p>
+                                {% if user.is_authenticated and f.is_available %}
+                                    <hr>
+                                    <form action="{% url 'add_to_cart' %}" method="post">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="food_id" value={{f.id}}>
+                                        <div class="row">
+                                            <div class="col-md-6 g-1">
+                                                <div class="input-group">
+                                                    <div class="dec btn btn-outline-secondary" type="button">-</div>
+                                                    <input type="number" name="quantity" class="form-control text-center" value="1" readonly>
+                                                    <div class="inc btn btn-outline-secondary" type="button">+</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 g-1">
+                                                <input type="submit" value="Add to cart" class="w-100 btn btn-primary">
+                                            </div>
+                                        </div>
+                                    </form>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+            <div class="row">
+                <h1 class="h1" id="South Indian">South Indian</h1>
+            </div>
+            {% for f in food %}
+                {% if f.category|stringformat:"s" == "South Indian" %}
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card my-2">
+                            <img src=" {{f.image.url}} " alt="{{f.name}}" class="card-img-top responsive">
+                            <div class="card-body">
+                                <a href="{% url 'details' f.id %}" class="btn butn"><h5>{{f.name}}</h5></a>
+                                <p class="card-text"><i class="bi bi-currency-rupee"></i>{{f.price}}</p>
+                                {% if user.is_authenticated and f.is_available %}
+                                    <hr>
+                                    <form action="{% url 'add_to_cart' %}" method="post">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="food_id" value={{f.id}}>
+                                        <div class="row">
+                                            <div class="col-md-6 g-1">
+                                                <div class="input-group">
+                                                    <div class="dec btn btn-outline-secondary" type="button">-</div>
+                                                    <input type="number" name="quantity" class="form-control text-center" value="1" readonly>
+                                                    <div class="inc btn btn-outline-secondary" type="button">+</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 g-1">
+                                                <input type="submit" value="Add to cart" class="w-100 btn btn-primary">
+                                            </div>
+                                        </div>
+                                    </form>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+            <div class="row">
+                <h1 class="h1" id="Drinks">Drinks</h1>
+            </div>
+            {% for f in food %}
+                {% if f.category|stringformat:"s" == "Drinks" %}
+                    <div class="col-lg-3 col-md-6">
+                        <div class="card my-2">
+                            <img src=" {{f.image.url}} " alt="{{f.name}}" class="card-img-top responsive">
+                            <div class="card-body">
+                                <a href="{% url 'details' f.id %}" class="btn butn"><h5>{{f.name}}</h5></a>
+                                <p class="card-text"><i class="bi bi-currency-rupee"></i>{{f.price}}</p>
+                                {% if user.is_authenticated and f.is_available %}
+                                    <hr>
+                                    <form action="{% url 'add_to_cart' %}" method="post">
+                                        {% csrf_token %}
+                                        <input type="hidden" name="food_id" value={{f.id}}>
+                                        <div class="row">
+                                            <div class="col-md-6 g-1">
+                                                <div class="input-group">
+                                                    <div class="dec btn btn-outline-secondary" type="button">-</div>
+                                                    <input type="number" name="quantity" class="form-control text-center" value="1" readonly>
+                                                    <div class="inc btn btn-outline-secondary" type="button">+</div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6 g-1">
+                                                <input type="submit" value="Add to cart" class="w-100 btn btn-primary">
+                                            </div>
+                                        </div>
+                                    </form>
+                                {% endif %}
+                            </div>
+                        </div>
+                    </div>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock content %}
+
+{% block extra_js %}
+    <script src="{% static 'js/menu.js' %}"></script>
+{% endblock extra_js %}

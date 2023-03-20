@@ -1,0 +1,16 @@
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
+
+body::-webkit-scrollbar {
+  display: none;
+}
+
+.quantity{
+    text-align: center;
+    width: 50px;
+    border:  1px solid gray;
+    outline: none;
+}
